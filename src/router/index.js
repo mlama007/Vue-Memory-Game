@@ -7,16 +7,22 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'Home',
+    name: 'home',
+    meta: {
+      title: 'Memory Game - Home Page'
+    },
     component: Home
   },
   {
-    path: '/about',
-    name: 'About',
+    path: '/Instructions',
+    name: 'Instructions',
+    meta: {
+      title: 'Memory Game - Instructions Page'
+    },
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/Instructions.vue')
   }
 ]
 
@@ -25,5 +31,14 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+router.beforeEach((to, from, next) => {
+
+  const newMetaTitle = to.matched.slice().reverse().find(r => r.meta && r.meta.title);
+
+  if (newMetaTitle) document.title = newMetaTitle.meta.title;
+  
+  next();
+});
 
 export default router
