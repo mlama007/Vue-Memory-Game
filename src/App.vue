@@ -3,7 +3,6 @@
     <header>
       <h1 class="title">Matching Game</h1>
     </header>
-    <p role="status">{{announcement}}</p>
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/Instructions">Instructions</router-link>
@@ -13,25 +12,8 @@
 </template>
 
   <script>
-// @ is an alias to /src
-import { mapState, mapActions } from "vuex";
-
 export default {
   name: "home",
-  computed: {
-    ...mapState(["announcement"])
-  },
-  watch: {
-    $route: function() {
-      this.announceRoute({message:(this.$route.name + " page loaded")})
-    }
-  },
-  methods: {
-    ...mapActions(["update_Announcement"]),
-    announceRoute(message){
-      this.update_Announcement(message);
-    }
-  }
 };
 </script>
 
