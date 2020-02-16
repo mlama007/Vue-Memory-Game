@@ -1,16 +1,16 @@
 <template>
-  <div class="home" aria-label="Memory Game Board" v-focus>
+  <div class="home" aria-label="Memory Game Board">
     <p role="status">{{gameAnnounce}}</p>
     <Winning v-if="win" :newGame="newGame" :winningMessage="winningMessage"></Winning>
-    <main class="container" v-else>
-    <h2 v-focus tabindex="-1">Game Board</h2>
+    <main class="container" v-else id="main" tabindex="-1" aria-labelledby="gameTitle">
+      <h2 id="gameTitle">Game Board</h2>
       <section aria-label="Memory Game Controller" class="gameController">
         <button @click="newGame" class="restart buttonGray">
           <i class="fa fa-repeat"></i>
           <span class="reset">Reset</span>
         </button>
         <div>
-          <ul class="stars">
+          <ul class="stars" :aria-label="stars + ' stars left'">
             <li v-for="(star, index) in stars" :key="index" class="star">
               <i :class="`${index} fa fa-star`"></i>
             </li>
@@ -20,17 +20,19 @@
       </section>
 
       <section aria-label="Memory Game Board" id="cards">
+        <p id="gameUpdate">{{gameUpdate}}</p>
         <ul class="cards">
           <li
-            class="cardItem"
             v-for="(card, index) in this.deck.cards"
             :key="index"
             :aria-label="[ card.flipped ? card.name : '']"
+            class="cardItem"
           >
             <!-- {{card.name}} -->
             <button
-              :aria-label="[ card.flipped ? card.name + ' flipped' : 'unflipped button ' + (index+1)]"
-              :class="[ card.match ? 'card match' : card.flipped ? 'card open show' : card.close ? 'card close' : 'card']"
+              aria-describedby="gameUpdate"
+              :aria-label="[ card.flipped ? card.name + ' flipped' : 'card ' + (index+1)]"
+              :class="[ card.match ? 'card match' : card.flipped ? 'card show' : card.close ? 'card close' : 'card']"
               @click="flipCard(card)"
               :disabled="card.flipped"
             >
@@ -47,10 +49,10 @@
 <script>
 // @ is an alias to /src
 import Winning from "@/components/Winning.vue";
-import { mapState, mapActions } from "vuex";
+import { mapState, mapGetters, mapActions } from "vuex";
 
 export default {
-  name: "home",
+  name: "Home",
   components: {
     Winning
   },
@@ -65,37 +67,7 @@ export default {
       "cardsMatched",
       "types"
     ]),
-    deck: function() {
-      let deck = {
-        cards: []
-      };
-      for (let index = 0; index < this.types.length; index++) {
-        deck.cards.push({
-          name: this.types[index],
-          icon: "fa fa-" + this.types[index],
-          flipped: false,
-          match: false,
-          close: false
-        });
-        deck.cards.push({
-          name: this.types[index],
-          icon: "fa fa-" + this.types[index],
-          flipped: false,
-          match: false,
-          close: false
-        });
-      }
-      return deck;
-    },
-    winningMessage: function () {
-      let msg
-      if (this.stars != 1){
-        msg = `You won the game with ${this.stars} stars left!`
-      }else{
-        msg = `You won the game with ${this.stars} star left!`
-      }
-      return msg
-    }
+    ...mapGetters(["gameUpdate", "deck", "winningMessage"])
   },
   created() {
     this.shuffle(this.deck.cards);
@@ -148,7 +120,9 @@ export default {
       this.update_GameAnnounce({ message: "" });
 
       if (card.flipped) {
-        this.update_GameAnnounce({ message: "Card already flipped" });
+        this.update_GameAnnounce({
+          message: "Card already flipped."
+        });
         return;
       } else {
         this.update_NumMoves({ moves: this.numMoves + 1 });
@@ -165,9 +139,13 @@ export default {
 
       // only allow flips if there are < or = 2 flipped cards
       if (this.numCardsFlipped < 2) {
+        if (this.numCardsFlipped < 1) {
+          this.update_GameAnnounce({
+            message: card.name + " flipped."
+          });
+        }
         card.flipped = true;
         this.update_NumCardsFlipped({ num: this.numCardsFlipped + 1 });
-        this.update_GameAnnounce({ message: card.name + " flipped" });
         this.update_CardsFlipped({ cards: card });
 
         // MATCH
@@ -210,21 +188,21 @@ export default {
           this.cardsFlipped[0].name !== this.cardsFlipped[1].name
         ) {
           // Wait before closing mismatched card
+          this.update_GameAnnounce({
+            message: card.name + " flipped. No match."
+          });
           setTimeout(() => {
             for (let i = 0; i < this.deck.cards.length; i++) {
               if (this.deck.cards[i].flipped && !this.deck.cards[i].match) {
                 this.deck.cards[i].flipped = false;
                 this.deck.cards[i].close = true;
               }
-              this.update_GameAnnounce({
-                message: card.name + " flipped. No match"
-              });
             }
 
             this.clear_CardsFlipped({ cards: [] });
             this.update_NumCardsFlipped({ num: 0 });
             return;
-          }, 500);
+          }, 900);
         }
       }
     }
@@ -259,25 +237,20 @@ export default {
     justify-content: center;
     align-items: center;
     box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
-
-  }
-
-  .open {
-    transform: rotateY(0);
-    background: #0b5891 url(/img/fabric.5959b418.png);
-    cursor: default;
   }
 
   .show {
     font-size: 33px;
+    background: #0b5891 url(/img/fabric.5959b418.png);
+    cursor: default;
   }
 
   .match {
     cursor: default;
     background: #0e4b5a url(/img/fabric.5959b418.png);
     font-size: 33px;
-    animation-name: pulse_animation;
-    -webkit-animation-name: pulse_animation;
+    animation-name: match-animation;
+    -webkit-animation-name: match-animation;
     animation-duration: 1000ms;
     -webkit-animation-duration: 1000ms;
     transform-origin: 70% 70%;
@@ -289,8 +262,8 @@ export default {
     cursor: default;
     animation-name: close;
     -webkit-animation-name: close;
-    animation-duration: 0.5s;
-    -webkit-animation-duration: 0.5s;
+    animation-duration: 1000ms;
+    -webkit-animation-duration: 1000ms;
     -webkit-animation-fill-mode: both;
     animation-fill-mode: both;
     &:hover,
@@ -302,40 +275,26 @@ export default {
   }
 }
 
-@keyframes pulse_animation {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(0.8);
-  }
-  60% {
-    transform: scale(1);
-  }
-  70% {
-    transform: scale(0.8);
-  }
-  80% {
-    transform: scale(1);
-  }
+@keyframes match-animation {
+  0%,
   100% {
     transform: scale(1);
+  }
+  60% {
+    transform: scale(0.9);
   }
 }
 
 @keyframes close {
   0%,
   100% {
-    transform: translateX(0);
+    transform: rotate(0deg);
   }
-  30%,
-  50%,
-  90% {
-    transform: translateX(-10px);
+  50% {
+    transform: rotate(5deg);
   }
-  40%,
   80% {
-    transform: translateX(10px);
+    transform: rotate(-5deg);
   }
 }
 
@@ -363,15 +322,17 @@ export default {
 
 // Overall
 [role="status"] {
-    height: 0;
-    margin: 0;
-    overflow: hidden;
-    color: #960000;
-    font-weight: bold;
+  // height: 0;
+  // margin: 0;
+  // overflow: hidden;
+  color: #960000;
+  font-weight: bold;
 }
 
-[tabindex="-1"]:focus {
-  outline: none;
+#gameUpdate {
+  height: 0;
+  margin: 0;
+  overflow: hidden;
 }
 
 .container {

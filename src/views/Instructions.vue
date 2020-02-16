@@ -1,7 +1,7 @@
 <template>
   <div>
-    <main class="main-instruction">
-      <h2 v-focus tabindex="-1">Instructions</h2>
+    <main class="main-instruction" id="main" tabindex="-1" aria-labelledby="instructionsTitle">
+      <h2 id="instructionsTitle">Instructions</h2>
       <section>
         <h3>Rules</h3>
         <p>This is a memory Game. The cards are shuffled and faced down. The point of the game is to find all the matches; there are a total of 16 cards to match.</p>

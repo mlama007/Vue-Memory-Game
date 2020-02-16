@@ -7,7 +7,7 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'home',
+    name: 'Home',
     meta: {
       title: 'Memory Game - Home Page'
     },
@@ -33,11 +33,8 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-
   const newMetaTitle = to.matched.slice().reverse().find(r => r.meta && r.meta.title);
-
   if (newMetaTitle) document.title = newMetaTitle.meta.title;
-  
   next();
 });
 

@@ -16,13 +16,50 @@ export default new Vuex.Store({
     types: [
       "car",
       "bug",
-      "paw",
-      "bomb",
-      "gamepad",
-      "diamond",
-      "heart",
-      "bell"
+      // "paw",
+      // "bomb",
+      // "gamepad",
+      // "diamond",
+      // "heart",
+      // "bell"
     ]
+  },
+  getters: {
+    gameUpdate: (state) => {
+      let update = 'You have ' + state.numMoves + ' total moves with ' + state.stars + ' stars left.'
+      return update
+    },
+    deck: (state) => {
+      let deck = {
+        cards: []
+      };
+      for (let index = 0; index < state.types.length; index++) {
+        deck.cards.push({
+          name: state.types[index],
+          icon: "fa fa-" + state.types[index],
+          flipped: false,
+          match: false,
+          close: false
+        });
+        deck.cards.push({
+          name: state.types[index],
+          icon: "fa fa-" + state.types[index],
+          flipped: false,
+          match: false,
+          close: false
+        });
+      }
+      return deck;
+    },
+    winningMessage: (state) => {
+      let msg;
+      if (state.stars != 1) {
+        msg = `You won the game with ${state.stars} stars left!`;
+      } else {
+        msg = `You won the game with ${state.stars} star left!`;
+      }
+      return msg;
+    }
   },
   mutations: {
     ERROR(state, error) {
@@ -82,13 +119,8 @@ export default new Vuex.Store({
     update_Win({ commit }, { win }) {
       commit('UPDATE_WIN', win)
     },
-    async update_Stars({ commit, dispatch }, { num }) {
-      try {
-        commit('UPDATE_STARS', num);
-        await dispatch('update_GameAnnounce', ({ message: num + " Stars left" }));
-      } catch (error) {
-        commit('ERROR', error)
-      }
+    update_Stars({ commit }, { num }) {
+      commit('UPDATE_STARS', num);
     },
     clear_CardsFlipped({ commit }, { cards }) {
       commit('CLEAR_CARDSFLIPPED', cards)
