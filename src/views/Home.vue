@@ -28,7 +28,7 @@
             :aria-label="[ card.flipped ? card.name : '']"
             class="cardItem"
           >
-            {{card.name}}
+            <!-- {{card.name}} -->
             <button
               aria-describedby="gameUpdate"
               :aria-label="[ card.flipped ? card.name + ' flipped' : 'card ' + (index+1)]"
@@ -314,9 +314,9 @@ export default {
 
 // Overall
 [role="status"] {
-  // height: 0;
-  // margin: 0;
-  // overflow: hidden;
+  height: 0;
+  margin: 0;
+  overflow: hidden;
   color: #960000;
   font-weight: bold;
 }
