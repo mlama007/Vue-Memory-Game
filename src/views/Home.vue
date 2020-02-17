@@ -288,9 +288,9 @@ export default {
 
 // Overall
 [role="status"] {
-  height: 0;
-  margin: 0;
-  overflow: hidden;
+  // height: 0;
+  // margin: 0;
+  // overflow: hidden;
   color: #960000;
   font-weight: bold;
 }

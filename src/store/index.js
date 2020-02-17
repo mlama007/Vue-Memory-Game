@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    routeAnnouncement: '',
     win: false,
     stars: 3,
     cardsFlipped: [],
@@ -60,6 +61,9 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    UPDATE_ROUTE_ANNOUNCEMENT(state, payload) {	
+      state.routeAnnouncement = payload	
+    },
     UPDATE_WIN(state, payload) {
       state.win = payload
     },
@@ -86,6 +90,9 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    update_routeAnnouncement({ commit }, { message }) {	
+      commit('UPDATE_ROUTE_ANNOUNCEMENT', message)	
+    },
     async clearGame({ commit, dispatch }) {
       try {
         await dispatch('update_Win', ({ win: false }))
