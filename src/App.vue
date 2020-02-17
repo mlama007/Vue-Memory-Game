@@ -1,14 +1,8 @@
 <template>
   <div id="app">
     <header>
-      <ul class="skip-links">
-        <li>
-          <a href="#main" ref="skipLink">Skip to main content</a>
-        </li>
-      </ul>
       <h1 class="title">Matching Game</h1>
     </header>
-    <p role="status">{{routeAnnouncement}}</p>
     <div id="nav">
       <router-link to="/">Home</router-link>|
       <router-link to="/Instructions">Instructions</router-link>
@@ -17,29 +11,9 @@
   </div>
 </template>
 
-  <script>
-import { mapState, mapActions } from "vuex";
-
+<script>
 export default {
   name: "app",
-  computed: {
-    ...mapState(["routeAnnouncement"])
-  },
-  watch: {
-    $route: function() {
-      this.$refs["skipLink"].focus();
-      setTimeout(() => {
-        this.announceRoute({ message: this.$route.name + " page loaded." });
-        return;
-      }, 500);
-    }
-  },
-  methods: {
-    ...mapActions(["update_routeAnnouncement"]),
-    announceRoute(message) {
-      this.update_routeAnnouncement(message);
-    }
-  }
 };
 </script>
 

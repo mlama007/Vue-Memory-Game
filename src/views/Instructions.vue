@@ -1,6 +1,6 @@
 <template>
   <div>
-    <main class="main-instruction" id="main" tabindex="-1" aria-labelledby="instructionsTitle">
+    <main class="main-instruction" id="main">
       <h2 id="instructionsTitle">Instructions</h2>
       <section>
         <h3>Rules</h3>
@@ -36,9 +36,9 @@ export default {
         "Every flipped card counts as a move."
       ],
       scores: [
-        { value: 3, description: "30 moves or less" },
-        { value: 2, description: "40 moves or less" },
-        { value: 1, description: "50 moves or less" }
+        { value: 3, description: "Win with 30 moves or less" },
+        { value: 2, description: "Win with 40 moves or less" },
+        { value: 1, description: "Win with 50 moves or less" }
       ]
     };
   }
