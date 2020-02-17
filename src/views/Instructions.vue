@@ -1,6 +1,6 @@
 <template>
   <div>
-    <main class="main-instruction" id="main" tabindex="-1">
+    <main class="main-instruction" id="main" tabindex="-1" aria-labelledby="instructionsTitle">
       <h2 id="instructionsTitle">Instructions</h2>
       <section>
         <h3>Rules</h3>
