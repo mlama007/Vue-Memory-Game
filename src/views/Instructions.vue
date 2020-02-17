@@ -1,6 +1,6 @@
 <template>
   <div>
-    <main class="main-instruction" id="main">
+    <main class="main-instruction" id="main" tabindex="-1">
       <h2 id="instructionsTitle">Instructions</h2>
       <section>
         <h3>Rules</h3>

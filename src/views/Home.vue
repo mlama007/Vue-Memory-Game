@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <Winning v-if="win" :newGame="newGame" :winningMessage="winningMessage"></Winning>
-    <main class="container" v-else id="main">
+    <main class="container" v-else id="main" tabindex="-1">
       <h2 id="gameTitle">Game Board</h2>
       <section class="gameController">
         <button @click="newGame" class="restart buttonGray">

@@ -1,6 +1,11 @@
 <template>
   <div id="app">
     <header>
+      <ul class="skip-links">
+        <li>
+          <a href="#main" ref="skipLink">Skip to main content</a>
+        </li>
+      </ul>
       <h1 class="title">Matching Game</h1>
     </header>
     <p role="status">{{routeAnnouncement}}</p>
@@ -22,9 +27,12 @@ export default {
   },
   watch: {
     $route: function() {
+      this.$refs["skipLink"].focus();
+
       this.announceRoute({ message: this.$route.name + " page loaded" });
       
       this.$nextTick(function() {
+
         let navLinks = this.$refs.nav
         
         navLinks.querySelectorAll("[aria-current]")

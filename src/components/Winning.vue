@@ -1,5 +1,5 @@
 <template>
-  <div class="win">
+  <section class="win">
     <div>
       <h2 id="congratulations">Congratulations!</h2>
       <ul class="stars">
@@ -10,7 +10,7 @@
       <p id="winningMsg">{{winningMessage}}</p>
       <button class="buttonGray" @click="newGame()">Play again</button>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
