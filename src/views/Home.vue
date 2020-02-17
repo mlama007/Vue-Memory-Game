@@ -1,15 +1,16 @@
 <template>
-  <div class="home">
+  <div class="home" aria-label="Memory Game Board">
+    <p role="status">{{gameAnnounce}}</p>
     <Winning v-if="win" :newGame="newGame" :winningMessage="winningMessage"></Winning>
-    <main class="container" v-else id="main" tabindex="-1">
+    <main class="container" v-else id="main" tabindex="-1" aria-labelledby="gameTitle">
       <h2 id="gameTitle">Game Board</h2>
-      <section class="gameController">
+      <section aria-label="Memory Game Controller" class="gameController">
         <button @click="newGame" class="restart buttonGray">
           <i class="fa fa-repeat"></i>
           <span class="reset">Reset</span>
         </button>
         <div>
-          <ul class="stars">
+          <ul class="stars" :aria-label="stars + ' stars left'">
             <li v-for="(star, index) in stars" :key="index" class="star">
               <i :class="`${index} fa fa-star`"></i>
             </li>
@@ -18,17 +19,22 @@
         </div>
       </section>
 
-      <section id="cards">
+      <section aria-label="Memory Game Board" id="cards">
+        <p id="gameUpdate">{{gameUpdate}}</p>
         <ul class="cards">
           <li
             v-for="(card, index) in this.deck.cards"
             :key="index"
+            :aria-label="[ card.flipped ? card.name : '']"
             class="cardItem"
           >
-            <!-- {{card.name}} -->
+            {{card.name}}
             <button
+              aria-describedby="gameUpdate"
+              :aria-label="[ card.flipped ? card.name + ' flipped' : 'card ' + (index+1)]"
               :class="[ card.match ? 'card match' : card.flipped ? 'card show' : card.close ? 'card close' : 'card']"
               @click="flipCard(card)"
+              :disabled="card.match"
             >
               <span v-if="!card.flipped">?</span>
               <div v-else :class="deck.cards[index].icon"></div>
@@ -52,6 +58,7 @@ export default {
   },
   computed: {
     ...mapState([
+      "gameAnnounce",
       "win",
       "stars",
       "cardsFlipped",
@@ -60,7 +67,7 @@ export default {
       "cardsMatched",
       "types"
     ]),
-    ...mapGetters(["deck", "winningMessage"])
+    ...mapGetters(["gameUpdate", "deck", "winningMessage"])
   },
   created() {
     this.shuffle(this.deck.cards);
@@ -77,6 +84,7 @@ export default {
       "update_NumMoves",
       "clear_CardsMatched",
       "update_CardsMatched",
+      "update_GameAnnounce"
     ]),
     shuffle(cards) {
       this.deck.cards = [];
@@ -109,7 +117,11 @@ export default {
     },
 
     flipCard(card) {
+      this.update_GameAnnounce({ message: "" });
       if (card.flipped) {
+        this.update_GameAnnounce({
+          message: "Card already flipped."
+        });
         return;
       } else {
         this.update_NumMoves({ moves: this.numMoves + 1 });
@@ -123,41 +135,55 @@ export default {
           this.update_Stars({ num: 0 });
         }
       }
-
       // only allow flips if there are < or = 2 flipped cards
       if (this.numCardsFlipped < 2) {
+        if (this.numCardsFlipped < 1) {
+          this.update_GameAnnounce({
+            message: card.name + " flipped."
+          });
+        }
         card.flipped = true;
         this.update_NumCardsFlipped({ num: this.numCardsFlipped + 1 });
         this.update_CardsFlipped({ cards: card });
-
         // MATCH
         if (
           this.numCardsFlipped === 2 &&
           this.cardsFlipped[0].name == this.cardsFlipped[1].name
         ) {
-
+          let matchesRemaining =
+            this.deck.cards.length / 2 - this.cardsMatched.length - 1;
           for (let i = 0; i < this.deck.cards.length; i++) {
             if (this.deck.cards[i].name == this.cardsFlipped[0].name) {
               this.deck.cards[i].match = true;
             }
+            this.update_GameAnnounce({
+              message:
+                card.name +
+                " flipped. Match found! " +
+                matchesRemaining +
+                " matches left!"
+            });
           }
-
           this.update_CardsMatched({ cards: this.cardsFlipped });
           this.clear_CardsFlipped({ cards: [] });
           this.update_NumCardsFlipped({ num: 0 });
-
           //if number of cards matched = number or cards, then win the game
           if (this.cardsMatched.length === this.deck.cards.length / 2) {
             this.update_Win({ win: true });
+            this.update_GameAnnounce({
+              message: this.winningMessage
+            });
           }
         }
-
         // NO MATCH
         else if (
           this.numCardsFlipped === 2 &&
           this.cardsFlipped[0].name !== this.cardsFlipped[1].name
         ) {
           // Wait before closing mismatched card
+          this.update_GameAnnounce({
+            message: card.name + " flipped. No match."
+          });
           setTimeout(() => {
             for (let i = 0; i < this.deck.cards.length; i++) {
               if (this.deck.cards[i].flipped && !this.deck.cards[i].match) {

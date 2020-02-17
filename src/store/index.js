@@ -6,6 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     routeAnnouncement: '',
+    gameAnnounce: '',
     win: false,
     stars: 3,
     cardsFlipped: [],
@@ -61,8 +62,14 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    UPDATE_ROUTE_ANNOUNCEMENT(state, payload) {	
-      state.routeAnnouncement = payload	
+    ERROR(state, error) {
+      state.announce = error
+    },
+    UPDATE_ANNOUNCE(state, payload) {
+      state.announce = payload
+    },
+    UPDATE_ROUTE_ANNOUNCEMENT(state, payload) {
+      state.routeAnnouncement = payload
     },
     UPDATE_WIN(state, payload) {
       state.win = payload
@@ -87,12 +94,12 @@ export default new Vuex.Store({
     },
     UPDATE_CARDSMATCHED(state, payload) {
       state.cardsMatched.push(payload);
+    },
+    UPDATE_GAMEANNOUNCE(state, payload) {
+      state.gameAnnounce = payload
     }
   },
   actions: {
-    update_routeAnnouncement({ commit }, { message }) {	
-      commit('UPDATE_ROUTE_ANNOUNCEMENT', message)	
-    },
     async clearGame({ commit, dispatch }) {
       try {
         await dispatch('update_Win', ({ win: false }))
@@ -101,9 +108,13 @@ export default new Vuex.Store({
         await dispatch('update_NumCardsFlipped', ({ num: 0 }))
         await dispatch('update_NumMoves', ({ moves: 0 }))
         await dispatch('clear_CardsMatched', ({ cards: [] }))
+        await dispatch('update_GameAnnounce', ({ message: "" }))
       } catch (error) {
         commit('ERROR', error)
       }
+    },
+    update_routeAnnouncement({ commit }, { message }) {
+      commit('UPDATE_ROUTE_ANNOUNCEMENT', message)
     },
     update_Win({ commit }, { win }) {
       commit('UPDATE_WIN', win)
@@ -128,6 +139,9 @@ export default new Vuex.Store({
     },
     update_CardsMatched({ commit }, { cards }) {
       commit('UPDATE_CARDSMATCHED', cards)
+    },
+    update_GameAnnounce({ commit }, { message }) {
+      commit('UPDATE_GAMEANNOUNCE', message)
     }
   }
 })
