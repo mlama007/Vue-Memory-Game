@@ -10,7 +10,7 @@
     </header>
     <p role="status">{{routeAnnouncement}}</p>
     <div id="nav" ref="nav">
-      <router-link to="/" aria-current="page">Home</router-link> |
+      <router-link to="/" aria-current="page" :active-class="$route.path=='/' ? 'router-link-active' : ''">Home</router-link> |
       <router-link to="/Instructions">Instructions</router-link>
     </div>
     <router-view />
@@ -127,7 +127,7 @@ body {
     color: #2c3e50;
     // text-decoration: none;
 
-    &.router-link-exact-active {
+    &.router-link-active {
       text-decoration: none;
       color: #0b5891;
       border-bottom: 2px solid #0b5891;
