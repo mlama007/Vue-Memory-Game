@@ -98,7 +98,7 @@ body {
 
   a {
     background: #0e4b5a url(/img/fabric.5959b418.png);
-    background-blend-mode: color-burn;
+    border: 1px solid black;
     display: block;
     opacity: 0;
     font-size: 1em;
@@ -107,10 +107,6 @@ body {
     &:focus {
       opacity: 1;
       padding: 1em;
-    }
-
-    &:visited {
-      color: white;
     }
   }
 }
@@ -125,7 +121,7 @@ body {
   a {
     font-weight: bold;
     color: #2c3e50;
-    // text-decoration: none;
+    text-decoration: none;
 
     &.router-link-active {
       text-decoration: none;

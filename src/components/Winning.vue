@@ -1,7 +1,7 @@
 <template>
   <div class="win">
     <div>
-      <h2 id="congratulations" aria-labelledby="congratulations winningMsg" v-focus tabindex="-1">Congratulations!</h2>
+      <h2 id="congratulations" aria-labelledby="congratulations winningMsg" v-focus tabindex="-1">Congratulations</h2>
       <ul class="stars" :aria-label="stars + ' stars left'">
         <li v-for="(star, index) in stars" :key="index">
           <i :class="`${index} fa fa-star`"></i>
