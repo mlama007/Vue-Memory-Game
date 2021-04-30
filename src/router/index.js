@@ -4,8 +4,7 @@ import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
 
-const routes = [
-  {
+const routes = [{
     path: '/',
     name: 'Home',
     meta: {
@@ -18,8 +17,7 @@ const routes = [
       ]
     },
     component: Home
-  },
-  {
+  },{
     path: '/Instructions',
     name: 'Instructions',
     meta: {
@@ -35,8 +33,29 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/Instructions.vue')
-  }
-]
+  }, {
+    path: '/Trap-focus',
+    name: 'TrapFocus',
+    meta: {
+      title: 'Memory Game - Trap Focus - Nothing to do with the game, just some hackery',
+      metaTags: [{
+        name: 'description',
+        content: 'Hackery to figure out trap focus...'
+      }]
+    },
+    component: () => import(/* webpackChunkName: "trap-focus" */ '../views/TrapFocus.vue')
+  }, {
+  path: '/Trap-focus2',
+  name: 'TrapFocus2',
+  meta: {
+    title: 'Memory Game - Trap Focus 2 - Nothing to do with the game, just some hackery',
+    metaTags: [{
+      name: 'description',
+      content: 'Hackery to figure out trap focus...'
+    }]
+  },
+  component: () => import(/* webpackChunkName: "trap-focus" */ '../views/TrapFocus2.vue')
+}]
 
 const router = new VueRouter({
   mode: 'history',

@@ -5,16 +5,31 @@
         <li>
           <a href="#main" ref="skipLink">Skip to main content</a>
         </li>
+        <li>
+          <a href="#extra-links" ref="skipLink">Skip to extra links</a>
+        </li>
+        <li>
+          <a href="#extra-links-2" ref="skipLink">Skip to extra links 2</a>
+        </li>
+        <li>
+          <a href="#extra-not-links" ref="skipLink">Skip to extra not links </a>
+        </li>
       </ul>
       <h1 class="title">Matching Game</h1>
     </header>
     <p role="status">{{routeAnnouncement}}</p>
     <div id="nav" ref="nav">
       <router-link to="/" aria-current="page" :active-class="$route.path=='/' ? 'router-link-active' : ''">Home</router-link> |
-      <router-link to="/Instructions">Instructions</router-link>
+      <router-link to="/Instructions">Instructions</router-link> |
+      <router-link to="/Trap-focus">Trap Focus</router-link> |
+      <router-link to="/Trap-focus2">Trap Focus 2</router-link>
     </div>
     <router-view />
-  </div>
+    
+    <!--   
+    <div>{{Date.now()}}</div>    
+    -->
+  </div>  
 </template>
 
 <script>
@@ -88,6 +103,19 @@ body {
   color: #2c3e50;
 }
 
+// HACKERY!
+// this is a little gross, but its to force override all other 
+// focus values for things in the app.  I want these to be obnoxiously easy to see...
+:focus, // generic...
+a:focus, // links
+input:focus, // input type="text"
+button:focus, 
+button.card:focus {  // the big buttons are thiss
+  -webkit-box-shadow: 0px 0px 15px 10px rgba(255,0,255,0.32);
+  -moz-box-shadow: 0px 0px 15px 10px rgba(255,0,255,0.32);
+  box-shadow: 0px 0px 15px 10px rgba(255,0,255,0.32) !important;
+}
+
 // Skip to Main
 .skip-links {
   margin: 0;
@@ -129,5 +157,16 @@ body {
       border-bottom: 2px solid #0b5891;
     }
   }
+}
+
+// absurd colors to remind myself that these are different clickable elements
+li.star:nth-child(1) {
+  color: blue;
+}
+li.star:nth-child(2) {
+  color: green;
+}
+li.star:nth-child(3) {
+  color: red;
 }
 </style>

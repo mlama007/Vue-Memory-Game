@@ -42,6 +42,68 @@
           </li>
         </ul>
       </section>
+
+      <section aria-label="Someplace to put a bunch of extra unnecessary links">
+        <ul class="row-of-links" id="extra-links">
+          <li>
+            <a href="#">Some Link 1</a>
+          </li>
+          <li>
+            <a href="#">Some Link 2</a>
+          </li>
+          <li>
+            <a href="#">Some Link 3</a>
+          </li>
+          <li>
+            <a href="#">Some Link 4</a>
+          </li>
+          <li>
+            <a href="#">Some Link 5</a>
+          </li>
+        </ul>
+        <ul class="row-of-links" id="extra-links-2">
+          <li>
+            <a href="#">Some Link 6</a>
+          </li>
+          <li>
+            <a href="#">Some Link 7</a>
+          </li>
+          <li>
+            <a href="#">Some Link 8</a>
+          </li>
+          <li>
+            <a href="#">Some Link 9</a>
+          </li>
+          <li>
+            <a href="#">Some Link 10</a>
+          </li>
+        </ul>
+         <ul class="row-of-not-links" id="extra-not-links">
+          <li>
+            <span>Some Text 1</span>
+          </li>
+          <li>
+            <span>Some Text 2</span>
+          </li>
+          <li>
+            <span>Some Text 3</span>
+          </li>
+          <li>
+            <button>Some Text 4</button>
+          </li>
+          <li>
+            <button>Some Text 5</button>
+          </li>
+        </ul>
+      </section>
+      <!-- hacking around with some iframes
+      <section>
+        <div><iframe src="http://www.benjaminapetersen.me" height="150" width="600" title="Iframe Example"></iframe></div>
+        <div><iframe src="http://www.benjaminapetersen.me" height="150" width="600" title="Iframe Example"></iframe></div>
+        <div><iframe src="http://www.benjaminapetersen.me" height="150" width="600" title="Iframe Example"></iframe></div>
+        <div><iframe src="http://www.benjaminapetersen.me" height="150" width="600" title="Iframe Example"></iframe></div>
+      </section>
+      -->
     </main>
   </div>
 </template>
@@ -380,4 +442,40 @@ export default {
     grid-template-columns: repeat(4, 1fr);
   }
 }
-</style>
+
+
+// hackery -----------------------------------------------------------
+// hackery -----------------------------------------------------------
+// hackery -----------------------------------------------------------
+// hackery -----------------------------------------------------------
+// hackery -----------------------------------------------------------
+// hackery -----------------------------------------------------------
+// Careful! This stuff might not actually be accessible
+// hackery -----------------------------------------------------------
+// hackery -----------------------------------------------------------
+.row-of-links, .row-of-not-links {
+  margin: 0px;
+  padding: 0px;  
+  // border: 1px dashed blue;
+  // outline: 1px dashed salmon;
+}
+.row-of-links li, .row-of-not-links li {
+  display: inline;
+  margin: 0px 15px;
+  // border: 1px dashed blue;
+  // outline: 1px dashed salmon;
+}
+.row-of-links a, .row-of-not-links span {
+  color: #0b5891;
+}
+
+// CSS for testing that image badges <input type="image"> are rendered naturally even with greedy input styles.
+// https://pendo-io.atlassian.net/browse/APP-39507
+// input {
+//   margin: 50px;
+//   padding: 50px;
+//   border: 2px dashed #990000;
+//   outline: 2px solid #009900;
+//   line-height: 50;
+// }
+</style> https://github.com/pendo-io/shared-services/pull/645

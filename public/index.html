@@ -7,12 +7,140 @@
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title>Matching Game</title>
     <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+
+
+    <script>
+
+      // list subscription / envs
+      const pendoDevMatchingLocalhost = {env: 'pendo-dev', name: 'pendo-dev-matching', apiKey: '9dd44964-4c13-41f1-73bb-e71d0b3d1565', script: 'https://pendo-dev-static.storage.googleapis.com/agent/static/'};
+      const pendoMagicMatchingLocalhost = {env: 'pendo-magic', name: 'pendo-magic-matching', apiKey: 'aef4ce0f-b415-4ea8-5915-450e46311613', script: 'https://pendo-magic-static.storage.googleapis.com/agent/static/'};
+      const pendoDevTestRandoJunk = {env: 'pendo-dev', name: 'ben_test_rando_junk', apiKey: '0f23a3d7-041e-402d-7ca6-f78e8dd32fb2', script: 'https://pendo-dev-static.storage.googleapis.com/agent/static/' }
+
+      const pendoInternalBenApp = {env: 'pendo-dev', name: 'ben_pendo_internal_ben_app', apiKey: '528e1639-40e6-49c7-5195-ec960ec46149', script: 'https://pendo-dev-static.storage.googleapis.com/agent/static/' };
+
+      // set
+      const subscriptionToUse = pendoInternalBenApp;
+      console.log('Using sub:', subscriptionToUse);
+
+      setTimeout(function() {
+          (function(apiKey){
+            (function(p,e,n,d,o){var v,w,x,y,z;o=p[d]=p[d]||{};o._q=[];
+            v=['initialize','identify','updateOptions','pageLoad','track'];for(w=0,x=v.length;w<x;++w)(function(m){
+                o[m]=o[m]||function(){o._q[m===v[0]?'unshift':'push']([m].concat([].slice.call(arguments,0)));};})(v[w]);
+                y=e.createElement(n);y.async=!0;y.src=subscriptionToUse.script+apiKey+'/pendo.js';
+                z=e.getElementsByTagName(n)[0];z.parentNode.insertBefore(y,z);})(window,document,'script','pendo');
+
+                // initial set of named randos
+                const randomVisitors = [{
+                  id: 'conroy+cage',
+                  email: 'ben.petersen+conroy+cage@pendo.io'
+                }, {
+                  id:               'jethro+jacobs',
+                  email:            'ben.petersen+jethro-jacobs@pendo.io'
+                }, {
+                  id:               'elijah+duran',
+                  email:            'ben.petersen+elijah-duran@pendo.io'
+                }, {
+                  id:               'jinger+melody',
+                  email:            'ben.petersen+jinger-melody@pendo.io'
+                }, {
+                  id:               'emma+jean+faye',
+                  email:            'ben.petersen+emma-jean-faye@pendo.io'
+                }, {
+                  id:               'cletus+boggs',
+                  email:            'ben.petersen+cletus-boggs@pendo.io'
+                }, {
+                  id:               'silas+filas',
+                  email:            'ben.petersen+silas-filas@pendo.io'
+                }, {
+                  id:               'shizzle+mcdrizzle',
+                  email:            'ben.petersen+sizzle-mcdrizzle@pendo.io'
+                }]
+
+                // and an additional bunch of no-name randos.
+                const max = 50;
+                let i = 0;
+                let randos = [];
+                while (i <= max) {
+                  randos.push(i);
+                  i++;
+                }
+                randos.forEach((rambo) => {
+                  randomVisitors.push({
+                    id: 'random+visitor-' + rambo,
+                    email: 'ben.petersen+random+visitor-' + rambo + '@pendo.io'
+                  });
+                });
+
+                // console.log('random vistors:', randomVisitors);
+                // pluck one out to use as a user
+                var randomVisitor = randomVisitors[Math.floor(Math.random() * randomVisitors.length)]
+                console.log('random visitor selected:', randomVisitor);
+
+                // Call this whenever information about your visitors becomes available
+                // Please use Strings, Numbers, or Bools for value types.
+                pendo.initialize({
+                    visitor: {
+                        id:               randomVisitor.id,   // Required if user is logged in
+                        email:            randomVisitor.email // Recommended if using Pendo Feedback, or NPS Email
+                        // full_name:    // Recommended if using Pendo Feedback
+                        // role:         // Optional
+
+                        // You can add any additional visitor level key-values here,
+                        // as long as it's not one of the above reserved names.
+                    },
+
+                    account: {
+                        id:           'conroy-cage-and-the-psychobilly-goats' // its a band, or something
+                        // name:         // Optional
+                        // is_paying:    // Recommended if using Pendo Feedback
+                        // monthly_value:// Recommended if using Pendo Feedback
+                        // planLevel:    // Optional
+                        // planPrice:    // Optional
+                        // creationDate: // Optional
+
+                        // You can add any additional account level key-values here,
+                        // as long as it's not one of the above reserved names.
+                    },
+                    //
+                    //
+                    // THIS IS ESSENTIAL TO MAKE THINGS WORK :)
+                    //
+                    // why does this make it work?
+                    // hard-coded here instead of agent.js in the pendo-client dir....
+                    // Primary API key
+                    // pendo.apiKey = getApiKey(options);
+                    // https://pendo-dev-static.storage.googleapis.com/agent/static/9dd44964-4c13-41f1-73bb-e71d0b3/pendo.js
+                    apiKey: apiKey
+                });
+            setInterval(() => {
+              console.log('Pendo API Key:', apiKey);
+            }, 10 * 1000);
+
+        })(
+          subscriptionToUse.apiKey // Matching Game Localhost
+          // '18eae7b9-207d-4171-6767-b88c835e1a73' // Ben Petersen Web
+          );
+      }, 2000);
+
+      // Hackery to print a timestamp on the page just to see where things land
+      // setTimeout(function() {
+      //   console.log('wassssup');
+      //   let node = document.getElementById('date-render-check');
+      //   // node.style.outline = '1px dashed #990000'
+      //   node.style.textAlign = 'center';
+      //   node.innerHTML = 'Hi ' + Date.now()
+      // }, 3000);
+
+
+      </script>
   </head>
   <body>
     <noscript>
       <strong>We're sorry but the Memory Game doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
     <div id="app"></div>
+    <div id="date-render-check"></div>
     <!-- built files will be auto injected -->
   </body>
 </html>
