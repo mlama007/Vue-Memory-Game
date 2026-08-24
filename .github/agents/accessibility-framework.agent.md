@@ -98,3 +98,66 @@ When implementing the Foundational phase:
 Complete repository-local tasks even when registration or maintainer-specific
 content remains pending, and clearly distinguish implemented work from pending
 external actions.
+
+## Workflow phase defaults
+
+When implementing the Workflow phase, cover all actions:
+
+1. **Make docs accessible by default**: improve structure, semantics, media
+   alternatives, tables, and code blocks in high-impact documentation.
+2. **Design accessible interfaces**: document project-relevant interface checks
+   and apply them to new or updated UI work.
+3. **Surface accessibility expectations for contributors**: add accessibility
+   expectations and links to checks in contributor guidance.
+4. **Establish a simple accessibility triage approach**: document reporting
+   path, severity categories, and resolution expectations in project guidance.
+5. **Tag beginner-friendly accessibility issues**: identify suitable issues and
+   apply `accessibility` plus `good first issue` with clear scope and criteria.
+6. **Add an accessibility section to the pull request template**: include
+   relevant checklist items for content and UI changes.
+7. **Leverage AI for Accessibility**: ensure AI prompts or agent instructions
+   include project accessibility requirements, and require human review.
+8. **Assign accessibility ownership**: document owner(s), responsibilities, and
+   handoff process in a maintained project location.
+9. **Evaluate key dependencies and upstream blockers**: document accessibility
+   risks, upstream issues, mitigations, and dependency-review expectations.
+
+## Testing phase defaults
+
+When implementing the Testing phase, cover all actions:
+
+1. **Add at least one automated accessibility check**: select, configure, run,
+   and connect findings to the issue-tracking process.
+2. **Perform a keyboard-only smoke test for core flows**: document journeys and
+   verify keyboard access, focus visibility, and focus order.
+3. **Perform a screen reader spot check for core flows**: document journeys,
+   test environment, and key results.
+4. **Perform manual accessibility checks**: document and run zoom, resize,
+   reflow, and contrast checks where applicable.
+5. **Perform accessibility checks for documentation**: review representative
+   docs for structure, alternatives, links, captions, tables, and code blocks.
+
+Record evidence for what was tested, what passed, and what is tracked for later
+work. Do not mark testing actions complete without documented coverage and issue
+tracking for remaining barriers.
+
+## Community phase defaults
+
+When implementing the Community phase, cover all actions:
+
+1. **Respond respectfully to accessibility issues**: document and apply response
+   practices, follow-up expectations, and respectful clarification patterns.
+2. **Publish accessibility progress updates**: prepare repeatable public updates
+   that include completed work, remaining work, and links.
+3. **Invite community help on accessibility work**: create contributor-ready
+   issues (`accessibility` + `help wanted`) with scope and acceptance criteria.
+4. **Use accessible collaboration tools**: review collaboration channels,
+   document barriers, and provide alternatives or remediation plans.
+5. **Share reusable accessibility resources**: publish discoverable templates,
+   checklists, or lessons learned with ownership for maintenance.
+6. **Recognize accessibility contributions publicly**: establish a repeatable,
+   consent-aware acknowledgment practice.
+
+For community actions that require public posting or repository-side changes to
+issues, labels, discussions, or release notes, prepare drafts and ask for
+maintainer approval before execution.
