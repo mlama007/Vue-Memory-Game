@@ -1,0 +1,84 @@
+name: "Accessibility bug report"
+description: Report a barrier that makes this project difficult or impossible to use with assistive technology, keyboard-only input, or other accessibility needs.
+title: "[Accessibility]: "
+labels: ["accessibility"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report an accessibility barrier. You do not need to disclose any personal, medical, or disability information to file this report — the assistive technology field below is optional.
+        See our [accessibility statement](https://github.com/mlama007/Vue-Memory-Game/blob/master/ACCESSIBILITY.md) for more information on how we handle reports.
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected behavior
+      description: What did you expect to happen?
+      placeholder: For example, "I expected to be able to flip a card using the keyboard."
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual-behavior
+    attributes:
+      label: Actual behavior
+      description: What actually happened instead?
+      placeholder: For example, "Pressing Enter or Space on a focused card did nothing."
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Steps to reproduce
+      description: List the exact steps needed to reproduce the issue.
+      placeholder: |
+        1. Go to '...'
+        2. Tab to '...'
+        3. Press '...'
+        4. See error/behavior
+    validations:
+      required: true
+
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Operating system, browser, and version(s) used (for example, "macOS 14, Safari 17").
+      placeholder: OS, browser, and version(s)
+    validations:
+      required: true
+
+  - type: input
+    id: assistive-technology
+    attributes:
+      label: Assistive technology
+      description: >
+        Assistive technology and version used, if any (for example, "NVDA 2024.1 + Firefox",
+        "VoiceOver + Safari", "Switch access", "Screen magnification", "Voice control").
+        This field is optional — enter "Not applicable" or "Prefer not to say" if you'd rather not share it.
+      placeholder: "e.g. VoiceOver 17 + Safari, Not applicable, or Prefer not to say"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      description: How much does this barrier affect your ability to use the project?
+      options:
+        - "Critical: Prevents completing a core task (for example, cannot play the game at all)"
+        - "Serious: Significant difficulty, but a workaround exists"
+        - "Moderate: Annoyance or inconsistent experience"
+        - "Minor: Small issue with minimal impact on usability"
+        - "Not sure"
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional context
+      description: Add any other context, screenshots, or screen recordings that would help us understand and reproduce the issue.
+    validations:
+      required: false
