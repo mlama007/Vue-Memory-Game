@@ -6,13 +6,13 @@
       <h2 id="gameTitle">Game Board</h2>
       <section aria-label="Memory Game Controller" class="gameController">
         <button @click="newGame" class="restart buttonGray">
-          <i class="fa fa-repeat"></i>
+          <i class="fa fa-repeat" aria-hidden="true"></i>
           <span class="reset">Reset</span>
         </button>
         <div>
           <ul class="stars" :aria-label="stars + ' stars left'">
             <li v-for="(star, index) in stars" :key="index" class="star">
-              <i :class="`${index} fa fa-star`"></i>
+              <i :class="`${index} fa fa-star`" aria-hidden="true"></i>
             </li>
           </ul>
           <p class="moves">Moves: {{numMoves}}</p>
@@ -37,7 +37,7 @@
               :disabled="card.match"
             >
               <span v-if="!card.flipped">?</span>
-              <div v-else :class="deck.cards[index].icon"></div>
+              <div v-else :class="deck.cards[index].icon" aria-hidden="true"></div>
             </button>
           </li>
         </ul>
